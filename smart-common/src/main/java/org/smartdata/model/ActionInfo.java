@@ -39,13 +39,12 @@ public class ActionInfo {
   private float progress;
 
   public ActionInfo() {
-
   }
 
   public ActionInfo(long actionId, long cmdletId, String actionName,
-                    Map<String, String> args, String result, String log,
-                    boolean successful, long createTime, boolean finished,
-                    long finishTime, float progress) {
+      Map<String, String> args, String result, String log,
+      boolean successful, long createTime, boolean finished,
+      long finishTime, float progress) {
     this.actionId = actionId;
     this.cmdletId = cmdletId;
     this.actionName = actionName;
@@ -99,7 +98,8 @@ public class ActionInfo {
   public void setArgsFromJsonString(String jsonArgs) {
     Gson gson = new Gson();
     args = gson.fromJson(jsonArgs,
-        new TypeToken<Map<String, String>>(){}.getType());
+        new TypeToken<Map<String, String>>() {
+        }.getType());
   }
 
   public String getResult() {
@@ -156,6 +156,42 @@ public class ActionInfo {
 
   public void setProgress(float progress) {
     this.progress = progress;
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+
+    ActionInfo that = (ActionInfo) o;
+
+    if (actionId != that.actionId) return false;
+    if (cmdletId != that.cmdletId) return false;
+    if (successful != that.successful) return false;
+    if (createTime != that.createTime) return false;
+    if (finished != that.finished) return false;
+    if (finishTime != that.finishTime) return false;
+    if (Float.compare(that.progress, progress) != 0) return false;
+    if (actionName != null ? !actionName.equals(that.actionName) : that.actionName != null) return false;
+    if (args != null ? !args.equals(that.args) : that.args != null) return false;
+    if (result != null ? !result.equals(that.result) : that.result != null) return false;
+    return log != null ? log.equals(that.log) : that.log == null;
+  }
+
+  @Override
+  public int hashCode() {
+    int result1 = (int) (actionId ^ (actionId >>> 32));
+    result1 = 31 * result1 + (int) (cmdletId ^ (cmdletId >>> 32));
+    result1 = 31 * result1 + (actionName != null ? actionName.hashCode() : 0);
+    result1 = 31 * result1 + (args != null ? args.hashCode() : 0);
+    result1 = 31 * result1 + (result != null ? result.hashCode() : 0);
+    result1 = 31 * result1 + (log != null ? log.hashCode() : 0);
+    result1 = 31 * result1 + (successful ? 1 : 0);
+    result1 = 31 * result1 + (int) (createTime ^ (createTime >>> 32));
+    result1 = 31 * result1 + (finished ? 1 : 0);
+    result1 = 31 * result1 + (int) (finishTime ^ (finishTime >>> 32));
+    result1 = 31 * result1 + (progress != +0.0f ? Float.floatToIntBits(progress) : 0);
+    return result1;
   }
 
   public static Builder newBuilder() {
@@ -238,7 +274,7 @@ public class ActionInfo {
     }
 
     public ActionInfo build() {
-      return new ActionInfo(actionId,cmdletId,actionName, args, result,
+      return new ActionInfo(actionId, cmdletId, actionName, args, result,
           log, successful, createTime, finished, finishTime, progress);
     }
   }

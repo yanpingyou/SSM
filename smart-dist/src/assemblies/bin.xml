@@ -3,6 +3,7 @@
           xsi:schemaLocation="http://maven.apache.org/ASSEMBLY/2.0.0 http://maven.apache.org/xsd/assembly-2.0.0.xsd">
     <id>bin</id>
     <formats>
+        <format>dir</format>
         <format>tar.gz</format>
     </formats>
     <includeBaseDirectory>false</includeBaseDirectory>
@@ -25,6 +26,26 @@
         <fileSet>
             <directory>${basedir}/../conf</directory>
             <outputDirectory>/smart-data-${project.version}/conf</outputDirectory>
+        </fileSet>
+        <fileSet>
+            <directory>${basedir}/../smart-zeppelin/interpreter</directory>
+            <outputDirectory>/smart-data-${project.version}/interpreter</outputDirectory>
+        </fileSet>
+        <fileSet>
+            <directory>${basedir}/../smart-zeppelin/notebook</directory>
+            <outputDirectory>/smart-data-${project.version}/notebook</outputDirectory>
+        </fileSet>
+        <fileSet>
+            <outputDirectory>/smart-data-${project.version}/lib/node_modules/zeppelin-vis</outputDirectory>
+            <directory>${basedir}/../smart-zeppelin/zeppelin-web/src/app/visualization</directory>
+        </fileSet>
+        <fileSet>
+            <outputDirectory>/smart-data-${project.version}/lib/node_modules/zeppelin-tabledata</outputDirectory>
+            <directory>${basedir}/../smart-zeppelin/zeppelin-web/src/app/tabledata</directory>
+        </fileSet>
+        <fileSet>
+            <outputDirectory>/smart-data-${project.version}/dist</outputDirectory>
+            <directory>${basedir}/../smart-zeppelin/zeppelin-web/dist</directory>
         </fileSet>
     </fileSets>
     <dependencySets>

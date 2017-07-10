@@ -17,8 +17,6 @@
  */
 package org.smartdata.model;
 
-import org.smartdata.model.RuleState;
-
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -35,6 +33,7 @@ public class RuleInfo implements Cloneable {
   private long numChecked;
   private long numCmdsGen;
   private long lastCheckTime;
+
 
   public long getId() {
     return id;
@@ -76,22 +75,12 @@ public class RuleInfo implements Cloneable {
     this.numChecked = numChecked;
   }
 
-  public long increaseNumChecked() {
-    this.numChecked++;
-    return this.numChecked;
-  }
-
   public long getNumCmdsGen() {
     return numCmdsGen;
   }
 
   public void setNumCmdsGen(long numCmdsGen) {
     this.numCmdsGen = numCmdsGen;
-  }
-
-  public long increaseNumCmdsGen(int n) {
-    numCmdsGen += n;
-    return numCmdsGen;
   }
 
   public long getLastCheckTime() {
@@ -129,14 +118,6 @@ public class RuleInfo implements Cloneable {
     this.lastCheckTime = lastCheckTime;
   }
 
-  public boolean equals(RuleInfo info) {
-    return info != null && id == info.id && submitTime == info.submitTime
-        && ruleText.equals(info.ruleText) && state == info.state
-        && numChecked == info.numChecked
-        && numCmdsGen == info.numCmdsGen
-        && lastCheckTime == info.lastCheckTime;
-  }
-
   @Override
   public String toString() {
     StringBuffer sb = new StringBuffer();
@@ -161,6 +142,34 @@ public class RuleInfo implements Cloneable {
   public RuleInfo newCopy() {
     return new RuleInfo(id, submitTime, ruleText, state, numChecked,
         numCmdsGen, lastCheckTime);
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+
+    RuleInfo ruleInfo = (RuleInfo) o;
+
+    if (id != ruleInfo.id) return false;
+    if (submitTime != ruleInfo.submitTime) return false;
+    if (numChecked != ruleInfo.numChecked) return false;
+    if (numCmdsGen != ruleInfo.numCmdsGen) return false;
+    if (lastCheckTime != ruleInfo.lastCheckTime) return false;
+    if (ruleText != null ? !ruleText.equals(ruleInfo.ruleText) : ruleInfo.ruleText != null) return false;
+    return state == ruleInfo.state;
+  }
+
+  @Override
+  public int hashCode() {
+    int result = (int) (id ^ (id >>> 32));
+    result = 31 * result + (int) (submitTime ^ (submitTime >>> 32));
+    result = 31 * result + (ruleText != null ? ruleText.hashCode() : 0);
+    result = 31 * result + (state != null ? state.hashCode() : 0);
+    result = 31 * result + (int) (numChecked ^ (numChecked >>> 32));
+    result = 31 * result + (int) (numCmdsGen ^ (numCmdsGen >>> 32));
+    result = 31 * result + (int) (lastCheckTime ^ (lastCheckTime >>> 32));
+    return result;
   }
 
   public static Builder newBuilder() {
