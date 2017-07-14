@@ -19,8 +19,7 @@
 angular.module('zeppelinWebApp')
 
   .controller('ActionsCtrl', ActionsCtrl);
-  ActionsCtrl.$inject = ['$scope', '$modal', '$sortableTableBuilder',
-    '$dialogs', 'actions0', 'actionTypes'];
+  ActionsCtrl.$inject = ['$scope', '$modal', '$sortableTableBuilder', '$dialogs', 'actions0', 'actionTypes'];
   function ActionsCtrl($scope, $modal, $stb, $dialogs, actions0, actionTypes) {
     'use strict';
 
@@ -89,7 +88,8 @@ angular.module('zeppelinWebApp')
             progress: {
                 current: action.progress,
                 max: 1,
-                usage: action.progress * 100
+                flag: action.finished ? action.successful : "-"
+                // usage: action.progress * 100
             }
           };
         }));
